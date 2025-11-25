@@ -7,12 +7,8 @@ from Chapter_21.mst import kruskal, prim, get_total_weight
 
 import random
 import time
-import matplotlib.pyplot as plt
+import matplotlib.pyplot
 
-
-# ---------------------------------------------------------------------
-# ------------------------------ TASK 4A -------------------------------
-# ---------------------------------------------------------------------
 
 labels = ['A', 'B', 'C', 'D', 'E']
 index = {v: i for i, v in enumerate(labels)}
