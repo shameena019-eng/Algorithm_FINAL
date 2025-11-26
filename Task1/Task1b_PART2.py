@@ -16,31 +16,26 @@ from chained_hashtable import ChainedHashTable
 
 
 # Simple hash function (doesn't require miller_rabin)
-def simple_hash(key, table_size):
-
+def simple_hash(key):
     hash_val = 0
     for char in str(key):
-        hash_val = (hash_val * 31 + ord(char)) % table_size
-    return hash_val
+        hash_val = (hash_val * 31 + ord(char))
+    return abs(hash_val)
 
 
 class LondonUndergroundStatusSystem:
 
-
     def __init__(self, table_size):
-
         self.operational_stations = ChainedHashTable(table_size, hash_func=simple_hash)
         self.table_size = table_size
         self.station_count = 0
 
     def mark_operational(self, station_name):
-
         normalised_name = station_name.strip()
         self.operational_stations.insert(normalised_name)
         self.station_count += 1
 
     def check_status(self, station_name):
-
         normalised_name = station_name.strip()
         result = self.operational_stations.search(normalised_name)
 
@@ -51,7 +46,7 @@ class LondonUndergroundStatusSystem:
 
 
 def find_next_prime(n):
-
+    """Find the next prime number >= n."""
 
     def is_prime(num):
         if num < 2:
@@ -67,7 +62,7 @@ def find_next_prime(n):
 
 
 def extract_stations_from_csv(filename):
-
+    """Extract unique station names from CSV file."""
     unique_stations = set()
 
     try:
@@ -94,17 +89,16 @@ def extract_stations_from_csv(filename):
 
 
 def main():
-
     print("LONDON UNDERGROUND STATION STATUS SYSTEM")
     print("Using CLRS Chained Hash Table (Chapter 11)")
-
     print()
 
     # STEP 1: DATA ACQUISITION
     print("STEP 1: DATA ACQUISITION")
-
     print("Method: Python CSV parsing script")
-
+    print("Description: Extracts station names from CSV columns 2 and 3,")
+    print("             uses Python set to eliminate duplicates, then sorts.")
+    print()
 
     csv_filename = os.path.join(PROJECT_ROOT, "data", "London_Underground_data.csv")
     stations = extract_stations_from_csv(csv_filename)
@@ -143,12 +137,9 @@ def main():
     print()
 
     test_queries = [
-        ("Victoria", "Valid station"),
-        ("Baker Street", "Valid station"),
-        ("King's Cross St. Pancras", "Valid with special characters"),
-        ("Paddinton", "MISSPELLED (should be Paddington)"),
-        ("Hogwarts", "FICTIONAL station"),
-        ("Westminster Abbey", "Not a tube station"),
+        ("King's Cross St. Pancras", "Valid station"),
+        ("Paddingtn", "MISSPELLED (should be Paddington)"),
+        ("Narnia", "FICTIONAL station"),
     ]
 
     for i, (query, description) in enumerate(test_queries, 1):
@@ -158,9 +149,11 @@ def main():
         print(f"  Output: {status}")
         print()
 
+
     print("TESTING COMPLETE")
 
 
 
 if __name__ == "__main__":
     main()
+
