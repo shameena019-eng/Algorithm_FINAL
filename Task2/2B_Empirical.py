@@ -3,6 +3,8 @@ import sys
 import random
 from time import perf_counter
 
+#Erald Jonuzi 001380316-6
+
 # Same import as 2a
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -17,7 +19,6 @@ def find_directory_upwards(start_dir, target_name, max_levels=10):
 
         parent = os.path.dirname(current)
         if parent == current: # reached filesystem root
-            print("CLRS folder not found")
             break
         current = parent
 
